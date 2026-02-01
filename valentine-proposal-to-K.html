@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K??? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated hearts background */
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: float-up 15s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 16px;
+            background: rgba(255, 182, 193, 0.4);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .heart::before {
+            left: 10px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1.5);
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .heart-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(0.9); }
+            20%, 40% { transform: scale(1.1); }
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .name-highlight {
+            color: #e91e63;
+            font-weight: 600;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            min-height: 120px;
+            padding: 0 20px;
+        }
+
+        button {
+            font-family: 'Georgia', serif;
+            font-size: 1.2em;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: absolute;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform-origin: center;
+            left: 20px;
+        }
+
+        #noBtn {
+            background: #f0f0f0;
+            color: #666;
+            right: 20px;
+            transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.5s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f5576c;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .question {
+                font-size: 1.2em;
+            }
+
+            button {
+                font-size: 1em;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+
+    <div class="container">
+        <div class="heart-icon">💖</div>
+        <h1>Special day for us</h1>
+        <p class="question"><span class="name-highlight" id="nameInput">Hello Kyra</span>, will you be my valentine?</p>
+        
+        <div class="buttons" id="buttonContainer">
+            <button id="yesBtn">Yes!! 💕</button>
+            <button id="noBtn">No.</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="heart-icon">🎉</div>
+            <h2>Save the date!</h2>
+            <p>Congratulations on choosing the right choice. Your date has been saved for 14th Feb. </br> Your.. "Mr. Right" will see you on 2026 at 7:30 PM.</p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        createHearts();
+
+        // Get elements
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const modal = document.getElementById('modal');
+        const buttonContainer = document.getElementById('buttonContainer');
+
+        let yesScale = 1;
+        let noBtnPosition = { x: 0, y: 0 };
+        let isTouchDevice = 'ontouchstart' in window;
+
+        // Yes button proximity effect
+        function handleYesButtonProximity(clientX, clientY) {
+            const btnRect = yesBtn.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+            
+            const distance = Math.sqrt(
+                Math.pow(clientX - btnCenterX, 2) + 
+                Math.pow(clientY - btnCenterY, 2)
+            );
+            
+            const maxDistance = 150;
+            
+            if (distance < maxDistance) {
+                const proximityFactor = 1 - (distance / maxDistance);
+                const newScale = 1 + (proximityFactor * 1); // Scale up to 2x
+                yesBtn.style.transform = `scale(${newScale})`;
+                
+                const colorIntensity = Math.floor(proximityFactor * 100);
+                yesBtn.style.background = `linear-gradient(135deg, hsl(330, 100%, ${70 - colorIntensity * 0.2}%) 0%, hsl(348, 100%, ${60 - colorIntensity * 0.2}%) 100%)`;
+            } else {
+                yesBtn.style.transform = 'scale(1)';
+                yesBtn.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+            }
+        }
+
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', function(e) {
+                handleYesButtonProximity(e.clientX, e.clientY);
+            });
+        }
+
+        // Yes button click
+        yesBtn.addEventListener('click', function() {
+            createConfetti();
+            setTimeout(() => {
+                modal.style.display = 'flex';
+            }, 500);
+        });
+
+        // No button behavior
+        function moveNoButton(clientX, clientY) {
+            const btnRect = noBtn.getBoundingClientRect();
+            const containerRect = buttonContainer.getBoundingClientRect();
+            
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+            
+            const distance = Math.sqrt(
+                Math.pow(clientX - btnCenterX, 2) + 
+                Math.pow(clientY - btnCenterY, 2)
+            );
+            
+            const threshold = isTouchDevice ? 80 : 100;
+            
+            if (distance < threshold) {
+                const angle = Math.atan2(btnCenterY - clientY, btnCenterX - clientX);
+                const moveDistance = isTouchDevice ? 100 : 120;
+                
+                let newX = noBtnPosition.x + Math.cos(angle) * moveDistance;
+                let newY = noBtnPosition.y + Math.sin(angle) * moveDistance;
+                
+                // Keep button within container bounds
+                const maxX = (containerRect.width / 2) - 80;
+                const maxY = 50;
+                
+                newX = Math.max(-maxX, Math.min(maxX, newX));
+                newY = Math.max(-maxY, Math.min(maxY, newY));
+                
+                noBtnPosition = { x: newX, y: newY };
+                
+                noBtn.style.transform = `translate(${newX}px, ${newY}px) ${isTouchDevice ? 'scale(0.9)' : 'scale(1)'}`;
+                
+                // Reset scale after animation on touch
+                if (isTouchDevice) {
+                    setTimeout(() => {
+                        if (noBtn.style.transform.includes('scale(0.9)')) {
+                            noBtn.style.transform = `translate(${newX}px, ${newY}px) scale(1)`;
+                        }
+                    }, 200);
+                }
+            }
+        }
+
+        // Desktop - mouse move
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', function(e) {
+                moveNoButton(e.clientX, e.clientY);
+            });
+        }
+
+        // Mobile - touch events
+        if (isTouchDevice) {
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                moveNoButton(touch.clientX, touch.clientY);
+            });
+            
+            noBtn.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                moveNoButton(touch.clientX, touch.clientY);
+            });
+        }
+
+        // Prevent clicking No button
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+        });
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#f5576c', '#f093fb', '#667eea', '#764ba2', '#ff69b4'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Optional: Allow user to input name
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            if (name) {
+                document.getElementById('nameInput').textContent = name;
+            }
+        });
+    </script>
+</body>
+</html>
